@@ -1,9 +1,5 @@
 <?php
 
-use App\Jobs\TestJob;
-use App\Jobs\TestPipelineJob;
-use App\Models\User;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/queue', function () {
     // $user = User::inRandomOrder()->first();
     // TestJob::dispatch($user)->onQueue('high-user');
     $pipeline = app(Pipeline::class);
