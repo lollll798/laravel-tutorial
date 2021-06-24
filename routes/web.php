@@ -1,5 +1,9 @@
 <?php
 
+use App\Jobs\TestJob;
+use App\Jobs\TestPipelineJob;
+use App\Models\User;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // $user = User::inRandomOrder()->first();
+    // TestJob::dispatch($user)->onQueue('high-user');
+    $pipeline = app(Pipeline::class);
+    $pipeline->send('hello bad world')
+            ->through([
+                function($string, $next) {
+                    $string = ucwords($string);
+
+                    return $next($string);
+                },
+                function($string, $next) {
+                    $string = str_ireplace('bad ', '', $string);
+
+                    return $next($string);
+                },
+                TestPipelineJob::class,
+            ])
+            ->then(function($string) {
+                dump($string);
+            });
+    return 'Finished';
 });

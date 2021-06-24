@@ -1,0 +1,12 @@
+Queue
+-----
+1. /horizon provide ui-dashboard-view for redis jobs
+2. php artisan horizon
+   - start the horizon monitor
+3. test horizon authenticate can change app enviroment != local or
+   go to vendor/laravel/horizon/HorizonApplicationServiceProvider.php comment app()->environment('local') || and return Gate::...
+4. php artisan queue:work --queue="high-user,default" --tries=3
+   - queue will retry 3 times
+   - queue will execute onQueue('high-user') job first follow by 'default'
+   - if using horizon, can set in horizon config 'queue' => ['high-user', 'default']
+5. queue using db need to run php artisan queue:table to generate the jobs table migration file
