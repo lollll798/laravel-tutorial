@@ -11,3 +11,7 @@ Queue
    - if using horizon, can set in horizon config 'queue' => ['high-user', 'default']
 5. queue using db need to run php artisan queue:table to generate the jobs table migration file
 6. In server, install supervisor to auto run queue command => location(/etc/supervisor/conf.d)
+
+Customize log
+-------------
+1. Try using observer design pattern to create customize log.
