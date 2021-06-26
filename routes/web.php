@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\CustomizeLogController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Pipeline\Pipeline;
+use App\Jobs\TestJob;
+use App\Models\User;
+use App\Jobs\TestPipelineJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +23,8 @@ Route::get('/', function () {
 });
 
 Route::get('/queue', function () {
-    // $user = User::inRandomOrder()->first();
-    // TestJob::dispatch($user)->onQueue('high-user');
+    $user = User::inRandomOrder()->first();
+    TestJob::dispatch($user)->onQueue('high-user');
     $pipeline = app(Pipeline::class);
     $pipeline->send('hello bad world')
             ->through([
@@ -40,3 +45,5 @@ Route::get('/queue', function () {
             });
     return 'Finished';
 });
+
+Route::get('/customizeLog', 'CustomizeLogController@customizeLog');
