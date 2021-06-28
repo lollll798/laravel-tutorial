@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\UseCases\CustomizeLog\Contracts;
 
 interface ObserverSubjects {
     public function attach($observables);

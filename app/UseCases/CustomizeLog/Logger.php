@@ -2,8 +2,8 @@
 
 namespace App\UseCases\CustomizeLog;
 
-use App\Contracts\Log;
-use App\Contracts\ObserverSubjects;
+use App\UseCases\CustomizeLog\Contracts\Log;
+use App\UseCases\CustomizeLog\Contracts\ObserverSubjects;
 
 class Logger implements ObserverSubjects {
 

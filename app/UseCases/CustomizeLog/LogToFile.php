@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-use App\Contracts\Log;
+use App\UseCases\CustomizeLog\Contracts\Log;
 
 class LogToFile implements Log {
     private $msg;

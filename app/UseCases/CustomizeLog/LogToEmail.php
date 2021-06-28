@@ -2,7 +2,7 @@
 
 namespace App\UseCases\CustomizeLog;
 
-use App\Contracts\Log;
+use App\UseCases\CustomizeLog\Contracts\Log;
 use Illuminate\Support\Facades\Mail;
 
 class LogToEmail implements Log {

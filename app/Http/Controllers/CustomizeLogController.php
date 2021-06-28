@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\CustomizeLog;
 use App\UseCases\CustomizeLog\LogToFile;
 use App\UseCases\CustomizeLog\LogToEmail;
+use App\UseCases\CustomizeLog\Traits\CustomizeLog;
 
 class CustomizeLogController extends Controller
 {

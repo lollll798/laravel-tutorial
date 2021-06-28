@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\UseCases\CustomizeLog\Traits;
 
 use App\UseCases\CustomizeLog\Logger;
 
