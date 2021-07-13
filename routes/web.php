@@ -6,6 +6,8 @@ use Illuminate\Pipeline\Pipeline;
 use App\Jobs\TestJob;
 use App\Models\User;
 use App\Jobs\TestPipelineJob;
+use App\UseCases\Facades\Postcard;
+use App\UseCases\Facades\PostcardSendingService;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +49,16 @@ Route::get('/queue', function () {
 });
 
 Route::get('/customizeLog', 'CustomizeLogController@customizeLog');
+
+
+Route::group(['prefix' => 'facades' ], function ()
+{
+    Route::get('/original-postcards', function () {
+        $postcardService = new PostcardSendingService('us', 4, 6);
+        $postcardService->hello('This is original postcards function', env('SUPPORT_MAIL'));
+    });
+
+    Route::get('/using-facades', function () {
+        Postcard::hello('This is from facade call', env('SUPPORT_MAIL'));
+    });
+});

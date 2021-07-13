@@ -15,3 +15,18 @@ Queue
 Customize log
 -------------
 1. Try using observer design pattern to create customize log.
+
+Others
+------
+1. Use ... syntax in php
+    Example 1:
+        echo sum(...[1,1])
+        function(...$interger) {
+            foreach ($integer as $i)
+        }
+        echo sum(1,1,1)
+
+    Example 2:
+        function($p1, $p2)
+        $arr = [ 'param1', 'param2']
+        $this->function(...$arr)
