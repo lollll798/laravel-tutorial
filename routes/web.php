@@ -88,6 +88,7 @@ Route::get('async-test', function() {
         })->timeout(function () use ($i) {
             // Ohh No! A process took too long to finish. Let's do something
             dump($i.': '.'Timeout');
+            return 'hallo count'.($i+1);
         });
     }
     dump('Before Pull Wait');
