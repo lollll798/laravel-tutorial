@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Jobs\TestPipelineJob;
 use App\UseCases\Facades\Postcard;
 use App\UseCases\Facades\PostcardSendingService;
+use Spatie\Async\Pool;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,22 @@ Route::group(['prefix' => 'facades' ], function ()
     Route::get('/using-facades', function () {
         Postcard::hello('This is from facade call', env('SUPPORT_MAIL'));
     });
+});
+
+Route::get('async-test', function() {
+    $pool = Pool::create();
+
+    for ($i=0; $i < 5; $i++) {
+        $pool->add(function () use ($i) {
+            dump($i.': do something');
+            return 'hallo count'.($i+1);
+        })->then(function ($output) use ($i) {
+            dump($i.': '.'output: '.$output);
+        })->catch(function (Throwable $exception) use ($i) {
+            dump($i.': '.'Exception');
+        });
+    }
+    dump('Before Pull Wait');
+    $pool->wait();
+    dump('After Pull Wait');
 });
