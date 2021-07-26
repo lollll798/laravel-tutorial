@@ -65,16 +65,29 @@ Route::group(['prefix' => 'facades' ], function ()
 });
 
 Route::get('async-test', function() {
-    $pool = Pool::create();
+    $pool = Pool::create()
+    // The maximum amount of processes which can run simultaneously.
+        ->concurrency(20)
+
+    // The maximum amount of time a process may take to finish in seconds
+    // (decimal places are supported for more granular timeouts).
+        ->timeout(15)
+
+    // Configure how long the loop should sleep before re-checking the process statuses in microseconds.
+        ->sleepTime(50000);
 
     for ($i=0; $i < 5; $i++) {
         $pool->add(function () use ($i) {
             dump($i.': do something');
-            return 'hallo count'.($i+1);
-        })->then(function ($output) use ($i) {
-            dump($i.': '.'output: '.$output);
+            $string = 'hallo count'.($i+1);
+            return compact('string', 'i');
+        })->then(function ($output) use ($pool) {
+            dump($output['i'].': '.'output: '.$output['i']);
         })->catch(function (Throwable $exception) use ($i) {
             dump($i.': '.'Exception');
+        })->timeout(function () use ($i) {
+            // Ohh No! A process took too long to finish. Let's do something
+            dump($i.': '.'Timeout');
         });
     }
     dump('Before Pull Wait');
